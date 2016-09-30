@@ -67,7 +67,7 @@ module ``about strings`` =
                         lines"
 
         AssertEquality
-              message "This\n                        is\n                        on\n                        five\n                        lines"
+              message "This\r\n                        is\r\n                        on\r\n                        five\r\n                        lines"
 
     [<Koan>]
     let ExtractValues() =
