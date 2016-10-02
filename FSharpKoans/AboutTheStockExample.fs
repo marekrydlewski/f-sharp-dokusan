@@ -27,6 +27,7 @@ open FSharpKoans.Core
 //---------------------------------------------------------------
 [<Koan(Sort = 15)>]
 module ``about the stock example`` =
+    open System.Globalization
     
     let stockData =
         [ "Date,Open,High,Low,Close,Volume,Adj Close";
@@ -55,11 +56,22 @@ module ``about the stock example`` =
           "2012-02-29,31.89,32.00,31.61,31.74,59323600,31.74"; ]
     
     // Feel free to add extra [<Koan>] members here to write
-    // tests for yourself along the way. You can also try 
-    // using the F# Interactive window to check your progress.
+    // tests for yourself along the way. You can also try 0
+    // using the F# Interactive window to check your progress
+
+    let stringToNumber s =
+        System.Double.Parse (s, CultureInfo.InvariantCulture)
+
+    let rowMaxInvariance (data:string array list) =
+        data |> List.maxBy (fun row ->
+            let a1 = stringToNumber row.[1]
+            let a2 = stringToNumber row.[4]
+            a1 - a2 |> abs)
 
     [<Koan>]
     let YouGotTheAnswerCorrect() =
-        let result =  __
+        let rowInvarianceMax = stockData |> List.tail |> List.map (fun x -> x.Split([|','|])) |> rowMaxInvariance
+            
+        let result = rowInvarianceMax.[0]
         
         AssertEquality "2012-03-13" result
